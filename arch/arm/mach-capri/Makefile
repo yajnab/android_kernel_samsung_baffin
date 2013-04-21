@@ -158,4 +158,6 @@ obj-y += ss_musb_info.o
 
 obj-$(CONFIG_MAP_MEMC_STATISTICS) += memc.o
 
+obj-$(CONFIG_FORCE_FAST_CHARGE)   += fastchg.o
+
 obj-$(CONFIG_SEC_DEBUG) += sec_debug.o sec_gaf.o sec_getlog.o sec-common.o sec-reboot.o

@@ -355,6 +355,13 @@ config CRASH_DUMP_START_UI_DISPLAY
 	help
 	  Say y to display crash dump start UI
 
+config FORCE_FAST_CHARGE
+        bool "Force AC charge mode at will"
+        default y
+        help
+          A simple sysfs interface to force adapters that
+          are detected as USB to charge as AC.
+
 config MAP_MEMC_STATISTICS
    tristate "MAP MEMC Statistics"
    help
