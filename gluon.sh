@@ -14,8 +14,9 @@ KERNEL_BUILD="Splendiferous_Kernel_Jelleybean-`date '+%Y-%m-%d---%H-%M'`"
 echo $1 > VERSION	
 VERSION='cat VERSION'
 $yellow
-MODULES=./gluon_works/bootimage/boot/lib/modules
-TOOLCHAIN=../../../../../../linaro/bin/arm-eabi
+MODULES=./gluon_works/system/lib/modules
+#TOOLCHAIN=../../../../../../linaro/bin/arm-eabi
+TOOLCHAIN=../../../../../linaro/bin/arm-eabi
 $blue
 echo " |========================================================================| "
 echo " |*************************** GLUON KERNEL *******************************| "
@@ -64,6 +65,11 @@ cd ../
 cd output
 rm boot.img
 cd ../
+rm -rf gluon_works/bootimage/unpack
+rm -rf gluon_works/bootimage/output
+rm -rf gluon_works/bootimage/boot
+rm -rf gluon_works/bootimage/source_img
+rm -rf gluon_works/system/lib/modules
 clear
 $cyan
 echo " Making config"
@@ -104,7 +110,13 @@ rm gluon_works/bootimage/unpack/boot.img-zImage
 cp boot.img-zImage gluon_works/bootimage/unpack	
 rm boot.img-zImage
 
-
+cd gluon_works
+mkdir system
+cd system
+mkdir lib
+cd lib
+mkdir modules
+cd ../../../
 find -name '*.ko' -exec cp -av {} $MODULES/ \;
 
 clear
@@ -123,6 +135,7 @@ cd ../../../
 clear
 $red
 echo " Making boot.img"
+cd bootimage
 $violet
 tools/mkbootfs boot | gzip > unpack/boot.img-ramdisk-new.gz
 rm -rf ../../output/boot.img
@@ -135,11 +148,15 @@ $white
 echo "Making Flashable Zip"
 rm -rf out
 mkdir out
+mkdir out/system
+mkdir out/system/lib
 cp -avr gluon_works/flash/META-INF/ out/
+cp -avr gluon_works/system/lib/modules/ out/system/lib/
 cp output/boot.img out/boot.img
 cd out
 zip -r $KERNEL_BUILD.zip *
 rm -rf META-INF
+rm -rf system
 rm boot.img
 cd ../
 
